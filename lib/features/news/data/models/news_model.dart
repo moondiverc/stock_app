@@ -18,4 +18,6 @@ class NewsModel extends News {
       sentimentLabel: json['overall_sentiment_label'] ?? 'Neutral',
     );
   }
+
+  // TODO: IMPLEMENT TOJSON UNTUK LOCAL
 }
