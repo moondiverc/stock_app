@@ -5,15 +5,19 @@ import 'package:stock_app/features/news/data/repositories/news_repository_impl.d
 import 'package:stock_app/features/news/domain/repositories/news_repository.dart';
 import 'package:stock_app/features/news/domain/usecases/get_all_news.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
+import 'package:stock_app/features/stock/data/datasources/stock_remote_data_sorce.dart';
+import 'package:stock_app/features/stock/data/repositories/stock_repository_impl.dart';
+import 'package:stock_app/features/stock/domain/repositories/stock_repository.dart';
+import 'package:stock_app/features/stock/domain/usecases/get_all_stock.dart';
+import 'package:stock_app/features/stock/presentation/cubit/stock_cubit.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
-  // http client (HARUS DIDAFTAR DULUAN)
   serviceLocator.registerSingleton<http.Client>(http.Client());
 
-  // baru daftar news features
   _initNews();
+  _initStock();
 }
 
 void _initNews() {
@@ -28,4 +32,18 @@ void _initNews() {
     ..registerSingleton<GetAllNews>(GetAllNews(serviceLocator()))
     // bloc (cubits)
     ..registerSingleton<NewsCubit>(NewsCubit(serviceLocator()));
+}
+
+void _initStock() {
+  // data sources
+  serviceLocator
+    ..registerSingleton<StockRemoteDataSource>(
+      StockRemoteDataSourceImpl(serviceLocator()),
+    )
+    // repositories
+    ..registerSingleton<StockRepository>(StockRepositoryImpl(serviceLocator()))
+    // use cases
+    ..registerSingleton<GetAllStock>(GetAllStock(serviceLocator()))
+    // bloc (cubits)
+    ..registerSingleton<StockCubit>(StockCubit(serviceLocator()));
 }
