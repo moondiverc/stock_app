@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
-import 'package:stock_app/features/news/presentation/pages/news_page.dart';
 import 'package:stock_app/features/stock/presentation/pages/stock_page.dart';
 import 'package:stock_app/init_dependencies.dart';
 
