@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
+import 'package:stock_app/features/company/presentation/pages/company_page.dart';
 import 'package:stock_app/features/stock/presentation/cubit/stock_cubit.dart';
 import 'package:stock_app/features/stock/presentation/widgets/stock_card.dart';
 
@@ -129,7 +130,21 @@ class _StockPageState extends State<StockPage> {
       padding: const EdgeInsets.only(top: 8.0, bottom: 24.0),
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return StockCard(stock: stocks[index]);
+        return StockCard(
+          stock: stocks[index],
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CompanyPage(
+                  ticker: stocks[index].ticker,
+                  price: stocks[index].price,
+                  changePercentage: stocks[index].changePercentage,
+                ),
+              ),
+            );
+          },
+        );
       },
     );
   }
