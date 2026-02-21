@@ -1,5 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:stock_app/features/company/data/datasources/company_data_source.dart';
+import 'package:stock_app/features/company/data/repositories/company_repository_impl.dart';
+import 'package:stock_app/features/company/domain/repositories/company_repository.dart';
+import 'package:stock_app/features/company/domain/usecases/get_company.dart';
+import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
 import 'package:stock_app/features/news/data/datasources/news_remote_data_source.dart';
 import 'package:stock_app/features/news/data/repositories/news_repository_impl.dart';
 import 'package:stock_app/features/news/domain/repositories/news_repository.dart';
@@ -18,6 +23,7 @@ Future<void> initDependencies() async {
 
   _initNews();
   _initStock();
+  _initCompany();
 }
 
 void _initNews() {
@@ -46,4 +52,20 @@ void _initStock() {
     ..registerSingleton<GetAllStock>(GetAllStock(serviceLocator()))
     // bloc (cubits)
     ..registerSingleton<StockCubit>(StockCubit(serviceLocator()));
+}
+
+void _initCompany() {
+  // data sources
+  serviceLocator
+    ..registerSingleton<CompanyRemoteDataSource>(
+      CompanyRemoteDataSourceImpl(serviceLocator()),
+    )
+    // repositories
+    ..registerSingleton<CompanyRepository>(
+      CompanyRepositoryImpl(serviceLocator()),
+    )
+    // use cases
+    ..registerSingleton<GetCompany>(GetCompany(serviceLocator()))
+    // bloc (cubits)
+    ..registerSingleton<CompanyCubit>(CompanyCubit(serviceLocator()));
 }
