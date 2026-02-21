@@ -8,9 +8,15 @@ final class StockInitial extends StockState {}
 final class StockLoading extends StockState {}
 
 final class StockLoaded extends StockState {
-  final List<Stock> stocks;
+  final List<Stock> gainers;
+  final List<Stock> losers;
+  final List<Stock> actives;
 
-  StockLoaded(this.stocks);
+  StockLoaded({
+    required this.gainers,
+    required this.losers,
+    required this.actives,
+  });
 }
 
 final class StockFailure extends StockState {

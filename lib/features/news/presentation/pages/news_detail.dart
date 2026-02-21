@@ -11,9 +11,7 @@ class NewsDetailPage extends StatelessWidget {
 
   const NewsDetailPage({super.key, required this.news});
 
-  // Fungsi untuk membuka link di browser bawaan HP
   Future<void> _launchArticleUrl(BuildContext context, String urlString) async {
-    // Validasi URL tidak kosong
     if (urlString.isEmpty) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -24,7 +22,6 @@ class NewsDetailPage extends StatelessWidget {
     }
 
     try {
-      // Tambahkan https:// jika belum ada
       String url = urlString;
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://$url';
@@ -48,7 +45,6 @@ class NewsDetailPage extends StatelessWidget {
     }
   }
 
-  // Fungsi warna sentimen (Bisa disamakan dengan NewsCard)
   Color _getSentimentColor(String label) {
     final lowerLabel = label.toLowerCase();
     if (lowerLabel.contains('bullish')) return Colors.green.shade100;
@@ -68,12 +64,10 @@ class NewsDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: StockAppBar(title: 'News', subtitle: 'News Details'),
-      // Konten Utama yang bisa di-scroll
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Gambar Header Besar
             if (news.bannerImage.isNotEmpty)
               Image.network(
                 news.bannerImage,
@@ -84,13 +78,11 @@ class NewsDetailPage extends StatelessWidget {
                     const SizedBox.shrink(),
               ),
 
-            // 2. Konten Teks (Padding)
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Label Sentimen & Sumber
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -125,13 +117,11 @@ class NewsDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
 
-                  // Judul Artikel
                   Text(
                     news.title,
                     style: const TextStyle(
                       fontSize: 24.0,
-                      fontWeight:
-                          FontWeight.w900, // Extra tebal untuk judul utama
+                      fontWeight: FontWeight.w900,
                       height: 1.3,
                       color: Colors.black87,
                       letterSpacing: -0.5,
@@ -139,21 +129,18 @@ class NewsDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 24.0),
 
-                  // Garis Pemisah (Divider)
                   Divider(color: Colors.grey.shade300, thickness: 1.0),
                   const SizedBox(height: 24.0),
 
-                  // Ringkasan Artikel (Summary)
                   Text(
                     news.summary,
                     style: const TextStyle(
                       fontSize: 16.0,
-                      height: 1.6, // Spasi baris diperlebar agar nyaman dibaca
+                      height: 1.6,
                       color: Color(0xFF4A4A4A),
                     ),
                   ),
-                  const SizedBox(height: 40.0), // Jarak lega ke bawah
-                  // Button untuk buka artikel di browser
+                  const SizedBox(height: 40.0),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
@@ -177,7 +164,6 @@ class NewsDetailPage extends StatelessWidget {
         ),
       ),
 
-      // 3. Tombol Call to Action yang selalu menempel di bawah (Sticky)
       bottomNavigationBar: const BottomNavbar(),
     );
   }

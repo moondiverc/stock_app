@@ -18,7 +18,14 @@ class StockCubit extends Cubit<StockState> {
 
     result.fold(
       (failure) => emit(StockFailure(failure.message)),
-      (stocks) => emit(StockLoaded(stocks)),
+
+      (marketData) => emit(
+        StockLoaded(
+          gainers: marketData.gainers,
+          losers: marketData.losers,
+          actives: marketData.actives,
+        ),
+      ),
     );
   }
 }

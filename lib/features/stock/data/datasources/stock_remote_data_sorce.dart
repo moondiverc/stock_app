@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stock_app/core/error/exceptions.dart';
 import 'package:stock_app/core/secret/app_secrets.dart';
-import 'package:stock_app/features/stock/data/models/stock_model.dart';
+import 'package:stock_app/features/stock/data/models/stock_category_model.dart';
 
 abstract interface class StockRemoteDataSource {
-  Future<List<StockModel>> getStocks();
+  Future<StockCategoryModel> getStocks();
 }
 
 class StockRemoteDataSourceImpl implements StockRemoteDataSource {
@@ -15,7 +15,7 @@ class StockRemoteDataSourceImpl implements StockRemoteDataSource {
   StockRemoteDataSourceImpl(this.client);
 
   @override
-  Future<List<StockModel>> getStocks() async {
+  Future<StockCategoryModel> getStocks() async {
     try {
       final response = await client.get(
         Uri.parse(
@@ -30,9 +30,7 @@ class StockRemoteDataSourceImpl implements StockRemoteDataSource {
           throw ServerException(data['Note'] ?? data['Information']);
         }
 
-        final List<dynamic> topGainers = data['top_gainers'] ?? [];
-
-        return topGainers.map((json) => StockModel.fromJson(json)).toList();
+        return StockCategoryModel.fromJson(data);
       } else {
         throw ServerException(
           'Failed to connect to server: ${response.statusCode}',
