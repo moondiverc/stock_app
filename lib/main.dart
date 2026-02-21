@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
+import 'package:stock_app/features/company/presentation/pages/company_page.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
 import 'package:stock_app/features/stock/presentation/cubit/stock_cubit.dart';
 import 'package:stock_app/features/stock/presentation/pages/stock_page.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppPallete.themeColor),
       ),
-      home: const StockPage(),
+      home: const CompanyPage(),
     );
   }
 }
