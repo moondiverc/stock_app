@@ -77,7 +77,7 @@ class _CompanyPageState extends State<CompanyPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<CompanyCubit, CompanyState>(
       builder: (context, state) {
-        String companyName = 'Loading...';
+        String companyName = '';
 
         if (state is CompanyLoaded) {
           companyName = state.company.name;
@@ -88,7 +88,7 @@ class _CompanyPageState extends State<CompanyPage> {
         return Scaffold(
           backgroundColor: const Color(0xFFF9F9F9),
           appBar: StockAppBar(title: widget.ticker, subtitle: companyName),
-          bottomNavigationBar: const BottomNavbar(),
+          bottomNavigationBar: const BottomNavbar(currentIndex: 0),
           body: _buildBody(state),
         );
       },

@@ -31,6 +31,7 @@ class _NewsPageState extends State<NewsPage> {
         title: 'Latest News',
         subtitle: 'Market Insights & updates',
       ),
+      backgroundColor: const Color(0xFFF9F9F9),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<NewsCubit, NewsState>(
@@ -67,7 +68,7 @@ class _NewsPageState extends State<NewsPage> {
           },
         ),
       ),
-      bottomNavigationBar: const BottomNavbar(),
+      bottomNavigationBar: const BottomNavbar(currentIndex: 1),
     );
   }
 }

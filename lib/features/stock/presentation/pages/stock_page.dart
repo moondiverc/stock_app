@@ -31,7 +31,7 @@ class _StockPageState extends State<StockPage> {
           title: 'Market Overview',
           subtitle: 'Today\'s top performers',
         ),
-        bottomNavigationBar: const BottomNavbar(),
+        bottomNavigationBar: const BottomNavbar(currentIndex: 0),
         body: Column(
           children: [
             Container(
@@ -65,12 +65,12 @@ class _StockPageState extends State<StockPage> {
                   labelColor: AppPallete.themeColor,
                   labelStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 13.0,
+                    fontSize: 18.0,
                   ),
                   unselectedLabelColor: AppPallete.greyColor,
                   unselectedLabelStyle: const TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 13.0,
+                    fontSize: 18.0,
                   ),
                   tabs: const [
                     Tab(text: 'Gainers'),

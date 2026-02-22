@@ -164,7 +164,7 @@ class NewsDetailPage extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar: const BottomNavbar(),
+      bottomNavigationBar: const BottomNavbar(currentIndex: 1),
     );
   }
 }
