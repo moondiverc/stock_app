@@ -7,15 +7,24 @@ class NewsModel extends News {
     required super.url,
     required super.bannerImage,
     required super.sentimentLabel,
+    required super.authors,
   });
 
   factory NewsModel.fromJson(Map<String, dynamic> json) {
+    List<String> authors = [];
+    if (json['authors'] != null && json['authors'] is List) {
+      authors = List<String>.from(
+        (json['authors'] as List).map((author) => author.toString()),
+      );
+    }
+
     return NewsModel(
       title: json['title'] ?? '',
       summary: json['summary'] ?? '',
       url: json['url'] ?? '',
       bannerImage: json['banner_image'] ?? '',
       sentimentLabel: json['overall_sentiment_label'] ?? 'Neutral',
+      authors: authors,
     );
   }
 

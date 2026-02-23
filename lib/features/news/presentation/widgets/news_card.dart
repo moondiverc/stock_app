@@ -81,7 +81,9 @@ class NewsCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 8.0),
                       Text(
-                        '•  Alpha Vantage',
+                        news.authors.isNotEmpty
+                            ? '•  ${news.authors[0]}'
+                            : '•  Alpha Vantage',
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.grey.shade500,

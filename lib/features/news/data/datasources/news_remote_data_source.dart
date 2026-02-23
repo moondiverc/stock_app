@@ -32,7 +32,9 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
 
         final List<dynamic> feed = data['feed'] ?? [];
 
-        return feed.map((json) => NewsModel.fromJson(json)).toList();
+        return feed
+            .map((json) => NewsModel.fromJson(json as Map<String, dynamic>))
+            .toList();
       } else {
         throw ServerException(
           'Failed to connect to server: ${response.statusCode}',

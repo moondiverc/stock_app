@@ -106,7 +106,9 @@ class NewsDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 12.0),
                       Text(
-                        'Alpha Vantage',
+                        news.authors.isNotEmpty
+                            ? news.authors[0]
+                            : 'Alpha Vantage',
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.grey.shade600,
@@ -127,6 +129,67 @@ class NewsDetailPage extends StatelessWidget {
                       letterSpacing: -0.5,
                     ),
                   ),
+                  const SizedBox(height: 16.0),
+
+                  // Display Authors
+                  if (news.authors.isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 10.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF5F3FF),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: const Color(0xFFE5DFF5),
+                          width: 1.0,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Authors:',
+                            style: TextStyle(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.grey.shade700,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                          const SizedBox(height: 8.0),
+                          Wrap(
+                            spacing: 8.0,
+                            runSpacing: 6.0,
+                            children: news.authors.map((author) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0,
+                                  vertical: 5.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border: Border.all(
+                                    color: const Color(0xFF5533BB),
+                                    width: 0.8,
+                                  ),
+                                ),
+                                child: Text(
+                                  author,
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: Color(0xFF5533BB),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
                   const SizedBox(height: 24.0),
 
                   Divider(color: Colors.grey.shade300, thickness: 1.0),
