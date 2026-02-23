@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../domain/entities/news.dart';
+import 'package:stock_app/features/news/domain/entities/news.dart';
 
 class NewsDetailPage extends StatelessWidget {
   static route(News news) =>

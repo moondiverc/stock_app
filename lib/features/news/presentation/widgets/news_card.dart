@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/news.dart';
+import 'package:stock_app/features/news/domain/entities/news.dart';
 
 class NewsCard extends StatelessWidget {
   final News news;
