@@ -24,26 +24,34 @@ class StockLocalDataSourceImpl implements StockLocalDataSource {
     List<StockModel> losers,
     List<StockModel> actives,
   ) {
-    box.put('gainers', gainers.map((e) => e.toJson()).toList());
-    box.put('losers', losers.map((e) => e.toJson()).toList());
-    box.put('actives', actives.map((e) => e.toJson()).toList());
+    try {
+      box.put('gainers', gainers.map((e) => e.toJson()).toList());
+      box.put('losers', losers.map((e) => e.toJson()).toList());
+      box.put('actives', actives.map((e) => e.toJson()).toList());
+    } catch (e) {
+      throw CacheException();
+    }
   }
 
   @override
   StockCategory loadStockCategory() {
-    List<StockModel> _getList(String key) {
+    List<StockModel> getList(String key) {
       final data = box.get(key);
       if (data != null) {
-        return List<dynamic>.from(data)
-            .map((e) => StockModel.fromJson(Map<String, dynamic>.from(e)))
-            .toList();
+        try {
+          return List<dynamic>.from(data)
+              .map((e) => StockModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList();
+        } catch (_) {
+          return [];
+        }
       }
       return [];
     }
 
-    final gainers = _getList('gainers');
-    final losers = _getList('losers');
-    final actives = _getList('actives');
+    final gainers = getList('gainers');
+    final losers = getList('losers');
+    final actives = getList('actives');
 
     if (gainers.isEmpty && losers.isEmpty && actives.isEmpty) {
       throw CacheException();

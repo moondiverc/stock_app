@@ -33,11 +33,15 @@ class StockRepositoryImpl implements StockRepository {
 
       final remoteStocks = await stockRemoteDataSource.getStocks();
 
-      stockLocalDataSource.cacheStockCategory(
-        remoteStocks.gainers.cast<StockModel>(),
-        remoteStocks.losers.cast<StockModel>(),
-        remoteStocks.actives.cast<StockModel>(),
-      );
+      try {
+        stockLocalDataSource.cacheStockCategory(
+          remoteStocks.gainers.cast<StockModel>(),
+          remoteStocks.losers.cast<StockModel>(),
+          remoteStocks.actives.cast<StockModel>(),
+        );
+      } on CacheException {
+        // cache exception
+      }
 
       return right(remoteStocks);
     } on ServerException catch (e) {

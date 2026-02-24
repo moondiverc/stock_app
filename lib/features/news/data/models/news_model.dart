@@ -29,4 +29,14 @@ class NewsModel extends News {
   }
 
   // TODO: IMPLEMENT TOJSON UNTUK LOCAL
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'summary': summary,
+      'url': url,
+      'banner_image': bannerImage,
+      'overall_sentiment_label': sentimentLabel,
+      'authors': authors,
+    };
+  }
 }

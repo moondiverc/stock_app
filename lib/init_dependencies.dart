@@ -8,6 +8,7 @@ import 'package:stock_app/features/company/data/repositories/company_repository_
 import 'package:stock_app/features/company/domain/repositories/company_repository.dart';
 import 'package:stock_app/features/company/domain/usecases/get_company.dart';
 import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
+import 'package:stock_app/features/news/data/datasources/news_local_data_source.dart';
 import 'package:stock_app/features/news/data/datasources/news_remote_data_source.dart';
 import 'package:stock_app/features/news/data/repositories/news_repository_impl.dart';
 import 'package:stock_app/features/news/domain/repositories/news_repository.dart';
@@ -26,42 +27,43 @@ final serviceLocator = GetIt.instance;
 Future<void> initDependencies() async {
   Hive.init((await getApplicationDocumentsDirectory()).path);
   final stockBox = await Hive.openBox('stocks_box');
+  final newsBox = await Hive.openBox('news_box');
 
-  serviceLocator.registerLazySingleton(() => stockBox);
   serviceLocator.registerFactory(() => InternetConnection());
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(serviceLocator()),
   );
   serviceLocator.registerSingleton<http.Client>(http.Client());
 
-  _initNews();
-  _initStock();
+  _initNews(newsBox);
+  _initStock(stockBox);
   _initCompany();
 }
 
-void _initNews() {
+void _initNews(Box box) {
   // data sources
   serviceLocator
-    ..registerSingleton<NewsRemoteDataSource>(
-      NewsRemoteDataSourceImpl(serviceLocator()),
+    ..registerFactory<NewsRemoteDataSource>(
+      () => NewsRemoteDataSourceImpl(serviceLocator()),
     )
+    ..registerFactory<NewsLocalDataSource>(() => NewsLocalDataSourceImpl(box))
     // repositories
-    ..registerSingleton<NewsRepository>(NewsRepositoryImpl(serviceLocator()))
+    ..registerSingleton<NewsRepository>(
+      NewsRepositoryImpl(serviceLocator(), serviceLocator(), serviceLocator()),
+    )
     // use cases
     ..registerSingleton<GetAllNews>(GetAllNews(serviceLocator()))
     // bloc (cubits)
     ..registerSingleton<NewsCubit>(NewsCubit(serviceLocator()));
 }
 
-void _initStock() {
+void _initStock(Box box) {
   // data sources
   serviceLocator
     ..registerFactory<StockRemoteDataSource>(
       () => StockRemoteDataSourceImpl(serviceLocator()),
     )
-    ..registerFactory<StockLocalDataSource>(
-      () => StockLocalDataSourceImpl(serviceLocator()),
-    )
+    ..registerFactory<StockLocalDataSource>(() => StockLocalDataSourceImpl(box))
     // repositories
     ..registerSingleton<StockRepository>(
       StockRepositoryImpl(serviceLocator(), serviceLocator(), serviceLocator()),
