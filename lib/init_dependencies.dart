@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:stock_app/core/network/connection_checker.dart';
 import 'package:stock_app/features/company/data/datasources/company_data_source.dart';
+import 'package:stock_app/features/company/data/datasources/company_local_data_source.dart';
 import 'package:stock_app/features/company/data/repositories/company_repository_impl.dart';
 import 'package:stock_app/features/company/domain/repositories/company_repository.dart';
 import 'package:stock_app/features/company/domain/usecases/get_company.dart';
@@ -28,6 +29,7 @@ Future<void> initDependencies() async {
   Hive.init((await getApplicationDocumentsDirectory()).path);
   final stockBox = await Hive.openBox('stocks_box');
   final newsBox = await Hive.openBox('news_box');
+  final companyBox = await Hive.openBox('company_box');
 
   serviceLocator.registerFactory(() => InternetConnection());
   serviceLocator.registerFactory<ConnectionChecker>(
@@ -37,7 +39,7 @@ Future<void> initDependencies() async {
 
   _initNews(newsBox);
   _initStock(stockBox);
-  _initCompany();
+  _initCompany(companyBox);
 }
 
 void _initNews(Box box) {
@@ -74,15 +76,22 @@ void _initStock(Box box) {
     ..registerSingleton<StockCubit>(StockCubit(serviceLocator()));
 }
 
-void _initCompany() {
+void _initCompany(Box box) {
   // data sources
   serviceLocator
     ..registerSingleton<CompanyRemoteDataSource>(
       CompanyRemoteDataSourceImpl(serviceLocator()),
     )
+    ..registerFactory<CompanyLocalDataSource>(
+      () => CompanyLocalDataSourceImpl(box),
+    )
     // repositories
     ..registerSingleton<CompanyRepository>(
-      CompanyRepositoryImpl(serviceLocator()),
+      CompanyRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+        serviceLocator(),
+      ),
     )
     // use cases
     ..registerSingleton<GetCompany>(GetCompany(serviceLocator()))

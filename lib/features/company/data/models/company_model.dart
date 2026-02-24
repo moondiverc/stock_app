@@ -30,4 +30,17 @@ class CompanyModel extends Company {
           'https://www.google.com/search?q=${json["Name"] ?? json["Symbol"]}',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Symbol': symbol,
+      'Name': name,
+      'Description': description,
+      'MarketCapitalization': marketCap,
+      'PERatio': peRatio,
+      'DividendYield': dividendYield,
+      'Sector': sector,
+      'OfficialSite': website,
+    };
+  }
 }
