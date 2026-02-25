@@ -80,14 +80,17 @@ class NewsCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8.0),
-                      Text(
-                        news.authors.isNotEmpty
-                            ? '•  ${news.authors[0]}'
-                            : '•  Alpha Vantage',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.w600,
+                      Expanded(
+                        child: Text(
+                          news.authors.isNotEmpty
+                              ? '•  ${news.authors[0]}'
+                              : '•  Alpha Vantage',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
