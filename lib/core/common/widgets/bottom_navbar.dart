@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/features/news/presentation/pages/news_page.dart';
-import 'package:stock_app/features/profile/presentation/profile_page.dart';
+import 'package:stock_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:stock_app/features/stock/presentation/pages/stock_page.dart';
 
 class BottomNavbar extends StatelessWidget {

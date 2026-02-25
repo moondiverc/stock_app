@@ -15,6 +15,12 @@ import 'package:stock_app/features/news/data/repositories/news_repository_impl.d
 import 'package:stock_app/features/news/domain/repositories/news_repository.dart';
 import 'package:stock_app/features/news/domain/usecases/get_all_news.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
+import 'package:stock_app/features/profile/data/datasources/profile_local_data_source.dart';
+import 'package:stock_app/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:stock_app/features/profile/domain/repositories/profile_repository.dart';
+import 'package:stock_app/features/profile/domain/usecases/get_profile.dart';
+import 'package:stock_app/features/profile/domain/usecases/update_profile.dart';
+import 'package:stock_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:stock_app/features/stock/data/datasources/stock_local_data_source.dart';
 import 'package:stock_app/features/stock/data/datasources/stock_remote_data_sorce.dart';
 import 'package:stock_app/features/stock/data/repositories/stock_repository_impl.dart';
@@ -27,10 +33,14 @@ final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
   Hive.init((await getApplicationDocumentsDirectory()).path);
+
+  // open box
   final stockBox = await Hive.openBox('stocks_box');
   final newsBox = await Hive.openBox('news_box');
   final companyBox = await Hive.openBox('company_box');
+  final profileBox = await Hive.openBox('profile_box');
 
+  // core dependencies
   serviceLocator.registerFactory(() => InternetConnection());
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(serviceLocator()),
@@ -40,6 +50,7 @@ Future<void> initDependencies() async {
   _initNews(newsBox);
   _initStock(stockBox);
   _initCompany(companyBox);
+  _initProfile(profileBox);
 }
 
 void _initNews(Box box) {
@@ -97,4 +108,26 @@ void _initCompany(Box box) {
     ..registerSingleton<GetCompany>(GetCompany(serviceLocator()))
     // bloc (cubits)
     ..registerSingleton<CompanyCubit>(CompanyCubit(serviceLocator()));
+}
+
+void _initProfile(Box box) {
+  // data sources
+  serviceLocator
+    ..registerFactory<ProfileLocalDataSource>(
+      () => ProfileLocalDataSourceImpl(box),
+    )
+    // repositories
+    ..registerSingleton<ProfileRepository>(
+      ProfileRepositoryImpl(serviceLocator()),
+    )
+    // use cases
+    ..registerSingleton<GetProfile>(GetProfile(serviceLocator()))
+    ..registerSingleton<UpdateProfile>(UpdateProfile(serviceLocator()))
+    // bloc (cubits)
+    ..registerSingleton<ProfileCubit>(
+      ProfileCubit(
+        getProfile: serviceLocator(),
+        updateProfile: serviceLocator(),
+      ),
+    );
 }

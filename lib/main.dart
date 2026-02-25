@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
+import 'package:stock_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:stock_app/features/stock/presentation/cubit/stock_cubit.dart';
 import 'package:stock_app/features/stock/presentation/pages/stock_page.dart';
 import 'package:stock_app/init_dependencies.dart';
@@ -16,6 +17,7 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<NewsCubit>()),
         BlocProvider(create: (_) => serviceLocator<StockCubit>()),
         BlocProvider(create: (_) => serviceLocator<CompanyCubit>()),
+        BlocProvider(create: (_) => serviceLocator<ProfileCubit>()),
       ],
       child: const MyApp(),
     ),
