@@ -82,7 +82,7 @@ class _CompanyPageState extends State<CompanyPage> {
         if (state is CompanyLoaded) {
           companyName = state.company.name;
         } else if (state is CompanyFailure) {
-          companyName = 'Failed to load data';
+          companyName = widget.ticker;
         }
 
         return Scaffold(
