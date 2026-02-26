@@ -8,20 +8,55 @@ class AppTheme {
     borderRadius: BorderRadius.circular(10),
   );
 
-  // dark theme mode
-  static final darkThemeMode = ThemeData.dark().copyWith(
+  // light theme mode
+  static final lightThemeMode = ThemeData.light().copyWith(
     scaffoldBackgroundColor: AppPallete.backgroundColor,
-    appBarTheme: const AppBarTheme(backgroundColor: AppPallete.backgroundColor),
+    primaryColor: AppPallete.themeColor,
+    colorScheme: ColorScheme.light(
+      primary: AppPallete.themeColor,
+      secondary: AppPallete.gradient1,
+      error: AppPallete.errorColor,
+      surface: AppPallete.whiteColor,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppPallete.themeColor,
+      foregroundColor: AppPallete.whiteColor,
+      elevation: 0,
+    ),
     chipTheme: ChipThemeData(
-      color: MaterialStatePropertyAll(AppPallete.backgroundColor),
-      side: BorderSide.none,
+      backgroundColor: const Color(0xFFEBEBF5),
+      labelStyle: const TextStyle(
+        color: AppPallete.themeColor,
+        fontWeight: FontWeight.w600,
+      ),
+      side: const BorderSide(color: Color(0xFFDEDDE9)),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: EdgeInsets.all(27),
+      contentPadding: const EdgeInsets.all(27),
+      filled: true,
+      fillColor: AppPallete.whiteColor,
       border: _border(),
-      enabledBorder: _border(),
+      enabledBorder: _border(AppPallete.themeColor),
       focusedBorder: _border(AppPallete.gradient1),
       errorBorder: _border(AppPallete.errorColor),
+    ),
+    cardTheme: CardThemeData(
+      color: AppPallete.whiteColor,
+      elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.05),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppPallete.themeColor,
+        foregroundColor: AppPallete.whiteColor,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: AppPallete.themeColor),
     ),
   );
 }

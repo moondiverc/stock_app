@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_app/core/theme/app_pallete.dart';
+import 'package:stock_app/core/theme/theme.dart';
 import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
 import 'package:stock_app/features/profile/presentation/cubit/profile_cubit.dart';
@@ -32,9 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Stock App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppPallete.themeColor),
-      ),
+      theme: AppTheme.lightThemeMode,
       home: StockPage(),
     );
   }
