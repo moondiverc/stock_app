@@ -27,9 +27,9 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
         try {
           final newsMap = Map<String, dynamic>.from(newsJson as Map);
           newsList.add(NewsModel.fromJson(newsMap));
-        } on TypeError catch (_) {
+        } on TypeError {
           continue;
-        } catch (_) {
+        } catch (e) {
           continue;
         }
       }

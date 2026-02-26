@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
+import 'package:stock_app/core/utils/url_launcher.dart';
 import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CompanyPage extends StatefulWidget {
   final String ticker;
@@ -49,28 +49,12 @@ class _CompanyPageState extends State<CompanyPage> {
     }
   }
 
-  Future<void> _launchWebsite(String urlString) async {
-    if (urlString.isEmpty || urlString == '-') {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Website url is not available')),
-        );
-      }
-      return;
-    }
-
-    final Uri url = Uri.parse(urlString);
-    try {
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch $url');
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open the website')),
-        );
-      }
-    }
+  void _launchWebsite(String urlString) {
+    UrlLauncherUtil.launchWebsite(
+      context,
+      urlString,
+      unavailableMessage: 'Website url is not available',
+    );
   }
 
   @override

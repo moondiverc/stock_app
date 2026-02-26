@@ -27,7 +27,7 @@ class NewsRepositoryImpl implements NewsRepository {
           final localNews = newsLocalDataSource.loadNews();
           return right(localNews);
         } catch (e) {
-          return left(Failure('No internet and no cached news found'));
+          return left(Failure('No internet and no cached news found!'));
         }
       }
 
@@ -40,12 +40,12 @@ class NewsRepositoryImpl implements NewsRepository {
       }
 
       return right(remoteNews);
-    } on ServerException catch (e) {
+    } on ServerException {
       try {
         final localNews = newsLocalDataSource.loadNews();
         return right(localNews);
-      } catch (_) {
-        return left(Failure(e.message));
+      } catch (e) {
+        return left(Failure(e.toString()));
       }
     }
   }

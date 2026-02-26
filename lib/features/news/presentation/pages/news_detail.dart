@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:stock_app/core/utils/url_launcher.dart';
 import 'package:stock_app/features/news/domain/entities/news.dart';
 
 class NewsDetailPage extends StatelessWidget {
@@ -11,38 +11,14 @@ class NewsDetailPage extends StatelessWidget {
 
   const NewsDetailPage({super.key, required this.news});
 
-  Future<void> _launchArticleUrl(BuildContext context, String urlString) async {
-    if (urlString.isEmpty) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('URL artikel tidak tersedia')),
-        );
-      }
-      return;
-    }
-
-    try {
-      String url = urlString;
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://$url';
-      }
-
-      final Uri uri = Uri.parse(url);
-
-      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Tidak dapat membuka link artikel')),
-          );
-        }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
-      }
-    }
+  void _launchArticleUrl(BuildContext context, String urlString) {
+    UrlLauncherUtil.launchWebsite(
+      context,
+      urlString,
+      unavailableMessage: 'URL artikel tidak tersedia',
+      errorMessage: 'Tidak dapat membuka link artikel',
+      addHttpsPrefix: true,
+    );
   }
 
   Color _getSentimentColor(String label) {
