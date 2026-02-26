@@ -20,8 +20,8 @@ class StockAppBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: const BoxDecoration(
         color: AppPallete.themeColor,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0),
-          bottomRight: Radius.circular(30.0),
+          bottomLeft: Radius.circular(25.0),
+          bottomRight: Radius.circular(25.0),
         ),
       ),
       child: SafeArea(
