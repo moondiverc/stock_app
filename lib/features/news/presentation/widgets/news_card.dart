@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/features/news/domain/entities/news.dart';
 
 class NewsCard extends StatelessWidget {
@@ -9,22 +10,26 @@ class NewsCard extends StatelessWidget {
 
   Color _getSentimentColor(String label) {
     final lowerLabel = label.toLowerCase();
+
     if (lowerLabel.contains('bullish')) {
-      return Colors.green.shade100;
+      return AppPallete.sentimentBullish;
     } else if (lowerLabel.contains('bearish')) {
-      return Colors.red.shade100;
+      return AppPallete.sentimentBearish;
     }
-    return const Color(0xFFF2F2F7);
+
+    return AppPallete.sentimentNeutral;
   }
 
   Color _getSentimentTextColor(String label) {
     final lowerLabel = label.toLowerCase();
+
     if (lowerLabel.contains('bullish')) {
-      return Colors.green.shade800;
+      return AppPallete.sentimentBullishText;
     } else if (lowerLabel.contains('bearish')) {
-      return Colors.red.shade800;
+      return AppPallete.sentimentBearishText;
     }
-    return const Color(0xFF3A3A3C);
+
+    return AppPallete.sentimentNeutralText;
   }
 
   @override
@@ -35,10 +40,12 @@ class NewsCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16.0),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppPallete.backgroundColor,
           borderRadius: BorderRadius.circular(12.0),
           border: Border.all(color: const Color(0xFFE5E5EA), width: 1.0),
         ),
+
+        // image
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,6 +59,7 @@ class NewsCard extends StatelessWidget {
                     const SizedBox.shrink(),
               ),
 
+            // sentiment label
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -79,12 +87,15 @@ class NewsCard extends StatelessWidget {
                           ),
                         ),
                       ),
+
                       const SizedBox(width: 8.0),
+
+                      // author
                       Expanded(
                         child: Text(
                           news.authors.isNotEmpty
-                              ? '•  ${news.authors[0]}'
-                              : '•  Alpha Vantage',
+                              ? news.authors[0]
+                              : 'Anonymous',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: Colors.grey.shade500,
@@ -95,8 +106,10 @@ class NewsCard extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 10.0),
 
+                  // news title
                   Text(
                     news.title,
                     maxLines: 3,
@@ -109,8 +122,10 @@ class NewsCard extends StatelessWidget {
                       height: 1.25,
                     ),
                   ),
+
                   const SizedBox(height: 8.0),
 
+                  // news summary
                   Text(
                     news.summary,
                     maxLines: 2,

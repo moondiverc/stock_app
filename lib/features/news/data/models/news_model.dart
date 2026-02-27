@@ -17,7 +17,6 @@ class NewsModel extends News {
         (json['authors'] as List).map((author) => author.toString()),
       );
     }
-
     return NewsModel(
       title: json['title'] ?? '',
       summary: json['summary'] ?? '',

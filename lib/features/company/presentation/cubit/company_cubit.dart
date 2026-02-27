@@ -36,7 +36,6 @@ class CompanyCubit extends Cubit<CompanyState> {
       trendResult.fold((failure) => emit(CompanyLoaded(company, [], true)), (
         prices,
       ) {
-        // Tentukan tren berdasarkan harga awal dan akhir di list
         bool isUp = false;
         if (prices.isNotEmpty && prices.length >= 2) {
           isUp = prices.last >= prices.first;

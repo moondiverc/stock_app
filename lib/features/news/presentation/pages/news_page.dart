@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:stock_app/core/common/widgets/loader.dart';
+import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/core/utils/show_snackbar.dart';
 import 'package:stock_app/features/news/presentation/cubit/news_cubit.dart';
 import 'package:stock_app/features/news/presentation/pages/news_detail.dart';
@@ -31,7 +32,7 @@ class _NewsPageState extends State<NewsPage> {
         title: 'Latest News',
         subtitle: 'Market Insights & updates',
       ),
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: AppPallete.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<NewsCubit, NewsState>(
@@ -63,7 +64,6 @@ class _NewsPageState extends State<NewsPage> {
                 },
               );
             }
-
             return const Center(child: Text('No News'));
           },
         ),

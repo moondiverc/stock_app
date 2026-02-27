@@ -9,7 +9,9 @@ part 'news_state.dart';
 class NewsCubit extends Cubit<NewsState> {
   final GetAllNews _getNewsUseCase;
 
-  NewsCubit(this._getNewsUseCase) : super(NewsInitial());
+  NewsCubit({required GetAllNews getNewsUseCase})
+    : _getNewsUseCase = getNewsUseCase,
+      super(NewsInitial());
 
   Future<void> getNews() async {
     emit(NewsLoading());

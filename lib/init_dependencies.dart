@@ -70,7 +70,7 @@ void _initNews(Box box) {
     // use cases
     ..registerSingleton<GetAllNews>(GetAllNews(serviceLocator()))
     // bloc (cubits)
-    ..registerSingleton<NewsCubit>(NewsCubit(serviceLocator()));
+    ..registerSingleton<NewsCubit>(NewsCubit(getNewsUseCase: serviceLocator()));
 }
 
 void _initStock(Box box) {
