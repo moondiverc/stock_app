@@ -4,7 +4,7 @@ import 'package:stock_app/features/profile/data/models/profile_model.dart';
 
 abstract interface class ProfileLocalDataSource {
   Future<ProfileModel> getProfile();
-  Future<void> saveProfile(ProfileModel profile);
+  Future<void> uploadProfile(ProfileModel profile);
 }
 
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
@@ -40,7 +40,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   }
 
   @override
-  Future<void> saveProfile(ProfileModel profile) async {
+  Future<void> uploadProfile(ProfileModel profile) async {
     await box.put(_key, profile.toJson());
   }
 }

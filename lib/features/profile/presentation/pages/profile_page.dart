@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:stock_app/core/common/widgets/loader.dart';
+import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:stock_app/features/profile/presentation/pages/edit_profile_page.dart';
 
@@ -20,14 +21,63 @@ class _ProfilePageState extends State<ProfilePage> {
     context.read<ProfileCubit>().loadProfile();
   }
 
+  Widget _buildSectionHeader(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: TextStyle(
+          color: AppPallete.greyColor,
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1.2,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoChip(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppPallete.themeColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppPallete.themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: AppPallete.themeColor),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              color: AppPallete.themeColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: AppPallete.backgroundColor,
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
-          if (state is ProfileLoading) return const Loader();
-          if (state is ProfileFailure) return Center(child: Text(state.error));
+          if (state is ProfileLoading) {
+            return const Loader();
+          }
+          if (state is ProfileFailure) {
+            return Center(child: Text(state.error));
+          }
           if (state is ProfileLoaded) {
             final profile = state.profile;
             return Scaffold(
@@ -43,13 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.edit, color: Colors.white),
+                  icon: const Icon(Icons.edit, color: AppPallete.whiteColor),
                 ),
               ),
-              backgroundColor: const Color(0xFFF9F9F9),
+              backgroundColor: AppPallete.backgroundColor,
               body: SingleChildScrollView(
                 child: Column(
                   children: [
+                    // profile image with gradient overlay
                     Container(
                       height: 400,
                       width: double.infinity,
@@ -92,6 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
+
                           Positioned(
                             bottom: 20,
                             left: 20,
@@ -100,6 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Row(
                                   children: [
+                                    // name
                                     Text(
                                       profile.name,
                                       style: const TextStyle(
@@ -108,7 +161,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
+
                                     const SizedBox(width: 8),
+
+                                    // age
                                     Text(
                                       profile.age,
                                       style: const TextStyle(
@@ -118,7 +174,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
+
                                 const SizedBox(height: 8),
+
+                                // major
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 12,
@@ -146,7 +205,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       ),
                     ),
+
                     const SizedBox(height: 24),
+
+                    // info chips
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Column(
@@ -173,9 +235,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                             ),
                           ),
+
                           const SizedBox(height: 24),
+
                           _buildSectionHeader('ABOUT ME'),
+
                           const SizedBox(height: 12),
+
+                          // description
                           Text(
                             profile.description,
                             style: const TextStyle(
@@ -185,7 +252,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(height: 100),
+
+                          const SizedBox(height: 50),
                         ],
                       ),
                     ),
@@ -197,48 +265,6 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           return const SizedBox.shrink();
         },
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: TextStyle(
-          color: Colors.grey.shade400,
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfoChip(IconData icon, String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFFEBEBF5),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFDEDDE9)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 18, color: const Color(0xFF5533BB)),
-          const SizedBox(width: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Color(0xFF5533BB),
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
       ),
     );
   }

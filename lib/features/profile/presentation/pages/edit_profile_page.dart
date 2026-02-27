@@ -74,6 +74,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: 'Edit Profile',
         subtitle: 'Update your details',
       ),
+      backgroundColor: AppPallete.backgroundColor,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(

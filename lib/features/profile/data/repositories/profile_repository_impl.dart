@@ -15,7 +15,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final profile = await localDataSource.getProfile();
       return right(profile);
     } catch (e) {
-      return left(Failure('Failed to load profile'));
+      return left(Failure('Failed to load profile!'));
     }
   }
 
@@ -23,10 +23,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, void>> updateProfile(Profile profile) async {
     try {
       final model = ProfileModel.fromEntity(profile);
-      await localDataSource.saveProfile(model);
+      await localDataSource.uploadProfile(model);
       return right(null);
     } catch (e) {
-      return left(Failure('Failed to save profile'));
+      return left(Failure('Failed to upload profile!'));
     }
   }
 }

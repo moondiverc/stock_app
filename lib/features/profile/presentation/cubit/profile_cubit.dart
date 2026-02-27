@@ -18,7 +18,6 @@ class ProfileCubit extends Cubit<ProfileState> {
        _updateProfile = updateProfile,
        super(ProfileInitial());
 
-  /// Load data profil dari Local Storage (Hive)
   Future<void> loadProfile() async {
     emit(ProfileLoading());
 
@@ -30,15 +29,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  /// Update data profil ke Local Storage
   Future<void> updateProfileData(Profile newProfile) async {
     emit(ProfileLoading());
 
     final result = await _updateProfile(newProfile);
 
     result.fold((failure) => emit(ProfileFailure(failure.message)), (_) {
-      // Jika sukses update, panggil loadProfile lagi
-      // agar state UI diperbarui dengan data yang baru disimpan
       loadProfile();
     });
   }
