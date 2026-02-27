@@ -9,7 +9,9 @@ part 'stock_state.dart';
 class StockCubit extends Cubit<StockState> {
   final GetAllStock _getStocksUseCase;
 
-  StockCubit(this._getStocksUseCase) : super(StockInitial());
+  StockCubit({required GetAllStock getStocksUseCase})
+    : _getStocksUseCase = getStocksUseCase,
+      super(StockInitial());
 
   Future<void> getStocks() async {
     emit(StockLoading());
@@ -18,7 +20,6 @@ class StockCubit extends Cubit<StockState> {
 
     result.fold(
       (failure) => emit(StockFailure(failure.message)),
-
       (marketData) => emit(
         StockLoaded(
           gainers: marketData.gainers,

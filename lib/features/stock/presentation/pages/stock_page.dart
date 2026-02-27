@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_app/core/common/widgets/appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
+import 'package:stock_app/core/common/widgets/loader.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:stock_app/features/company/presentation/pages/company_page.dart';
 import 'package:stock_app/features/stock/presentation/cubit/stock_cubit.dart';
@@ -21,6 +22,38 @@ class _StockPageState extends State<StockPage> {
     context.read<StockCubit>().getStocks();
   }
 
+  Widget _buildListView(List stocks) {
+    if (stocks.isEmpty) {
+      return const Center(
+        child: Text(
+          'No data available.',
+          style: TextStyle(color: AppPallete.greyColor),
+        ),
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 24.0),
+      itemCount: stocks.length,
+      itemBuilder: (context, index) {
+        return StockCard(
+          stock: stocks[index],
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CompanyPage(
+                  ticker: stocks[index].ticker,
+                  price: stocks[index].price,
+                  changePercentage: stocks[index].changePercentage,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,7 +64,6 @@ class _StockPageState extends State<StockPage> {
           title: 'Market Overview',
           subtitle: 'Today\'s top performers',
         ),
-        bottomNavigationBar: const BottomNavbar(currentIndex: 0),
         body: Column(
           children: [
             Container(
@@ -43,7 +75,7 @@ class _StockPageState extends State<StockPage> {
               ),
               height: 44.0,
               decoration: BoxDecoration(
-                color: const Color(0xFFF2F2F7),
+                color: AppPallete.tabColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Padding(
@@ -81,15 +113,12 @@ class _StockPageState extends State<StockPage> {
               ),
             ),
 
+            // tab views
             Expanded(
               child: BlocBuilder<StockCubit, StockState>(
                 builder: (context, state) {
                   if (state is StockLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppPallete.themeColor,
-                      ),
-                    );
+                    return const Loader();
                   } else if (state is StockFailure) {
                     return Center(
                       child: Text(
@@ -98,6 +127,7 @@ class _StockPageState extends State<StockPage> {
                       ),
                     );
                   } else if (state is StockLoaded) {
+                    // tab views
                     return TabBarView(
                       children: [
                         _buildListView(state.gainers),
@@ -106,46 +136,14 @@ class _StockPageState extends State<StockPage> {
                       ],
                     );
                   }
-
                   return const SizedBox.shrink();
                 },
               ),
             ),
           ],
         ),
+        bottomNavigationBar: const BottomNavbar(currentIndex: 0),
       ),
-    );
-  }
-
-  Widget _buildListView(List stocks) {
-    if (stocks.isEmpty) {
-      return const Center(
-        child: Text(
-          'No data available.',
-          style: TextStyle(color: AppPallete.greyColor),
-        ),
-      );
-    }
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 24.0),
-      itemCount: stocks.length,
-      itemBuilder: (context, index) {
-        return StockCard(
-          stock: stocks[index],
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CompanyPage(
-                  ticker: stocks[index].ticker,
-                  price: stocks[index].price,
-                  changePercentage: stocks[index].changePercentage,
-                ),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

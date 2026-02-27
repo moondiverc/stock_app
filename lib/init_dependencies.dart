@@ -87,7 +87,9 @@ void _initStock(Box box) {
     // use cases
     ..registerSingleton<GetAllStock>(GetAllStock(serviceLocator()))
     // bloc (cubits)
-    ..registerSingleton<StockCubit>(StockCubit(serviceLocator()));
+    ..registerSingleton<StockCubit>(
+      StockCubit(getStocksUseCase: serviceLocator()),
+    );
 }
 
 void _initCompany(Box box) {

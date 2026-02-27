@@ -4,12 +4,11 @@ import 'package:stock_app/features/stock/data/models/stock_model.dart';
 import 'package:stock_app/features/stock/domain/entities/stock_category.dart';
 
 abstract interface class StockLocalDataSource {
-  void cacheStockCategory(
+  void uploadStockCategory(
     List<StockModel> gainers,
     List<StockModel> losers,
     List<StockModel> actives,
   );
-
   StockCategory loadStockCategory();
 }
 
@@ -19,7 +18,7 @@ class StockLocalDataSourceImpl implements StockLocalDataSource {
   StockLocalDataSourceImpl(this.box);
 
   @override
-  void cacheStockCategory(
+  void uploadStockCategory(
     List<StockModel> gainers,
     List<StockModel> losers,
     List<StockModel> actives,

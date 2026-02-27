@@ -19,7 +19,6 @@ class StockModel extends Stock {
     );
   }
 
-  // TODO: IMPLEMENT TOJSON UNTUK LOCAL
   Map<String, dynamic> toJson() {
     return {
       'ticker': ticker,

@@ -6,9 +6,11 @@ class AppPallete {
   static const Color errorColor = Colors.redAccent;
   static const Color textColor = Color.fromRGBO(74, 74, 74, 1.0);
   static const Color backgroundChipColor = Color.fromRGBO(74, 74, 74, 1.0);
+  static const Color tabColor = Color.fromRGBO(242, 242, 247, 1);
 
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
+  static const Color blackColor = Colors.black87;
 
   static const Color gainColor = Colors.green;
   static const Color lossColor = Colors.red;

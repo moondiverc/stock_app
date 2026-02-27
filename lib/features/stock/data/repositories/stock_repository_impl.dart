@@ -27,14 +27,14 @@ class StockRepositoryImpl implements StockRepository {
           final localStocks = stockLocalDataSource.loadStockCategory();
           return right(localStocks);
         } catch (e) {
-          return left(Failure('No internet and no cached data'));
+          return left(Failure('No internet and no cached data!'));
         }
       }
 
       final remoteStocks = await stockRemoteDataSource.getStocks();
 
       try {
-        stockLocalDataSource.cacheStockCategory(
+        stockLocalDataSource.uploadStockCategory(
           remoteStocks.gainers.cast<StockModel>(),
           remoteStocks.losers.cast<StockModel>(),
           remoteStocks.actives.cast<StockModel>(),
@@ -44,12 +44,12 @@ class StockRepositoryImpl implements StockRepository {
       }
 
       return right(remoteStocks);
-    } on ServerException catch (e) {
+    } on ServerException {
       try {
         final localStocks = stockLocalDataSource.loadStockCategory();
         return right(localStocks);
-      } catch (_) {
-        return left(Failure(e.message));
+      } catch (e) {
+        return left(Failure(e.toString()));
       }
     }
   }

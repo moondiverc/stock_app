@@ -8,7 +8,7 @@ class StockCard extends StatelessWidget {
 
   const StockCard({super.key, required this.stock, this.onTap});
 
-  String _formatVolume(String volumeStr) {
+  String _stockVolume(String volumeStr) {
     try {
       double vol = double.parse(volumeStr);
       if (vol >= 1000000) {
@@ -43,37 +43,46 @@ class StockCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ticker
                     Text(
                       stock.ticker,
                       style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: AppPallete.blackColor,
                       ),
                     ),
+
                     const SizedBox(height: 4.0),
+
+                    // volume
                     Text(
-                      'Vol: ${_formatVolume(stock.volume)}',
+                      'Vol: ${_stockVolume(stock.volume)}',
                       style: TextStyle(
                         fontSize: 12.0,
-                        color: Colors.grey.shade500,
+                        color: AppPallete.greyColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    // price
                     Text(
                       '\$${stock.price}',
                       style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: AppPallete.blackColor,
                       ),
                     ),
+
                     const SizedBox(height: 4.0),
+
+                    // change percentage
                     Row(
                       children: [
                         Icon(icon, color: color, size: 12.0),
@@ -93,10 +102,11 @@ class StockCard extends StatelessWidget {
               ],
             ),
           ),
+
           Divider(
             height: 1.0,
             thickness: 1.0,
-            color: Colors.grey.shade200,
+            color: AppPallete.greyColor.withOpacity(0.2),
             indent: 24.0,
             endIndent: 24.0,
           ),
