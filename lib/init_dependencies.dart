@@ -3,11 +3,12 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:stock_app/core/network/connection_checker.dart';
-import 'package:stock_app/features/company/data/datasources/company_data_source.dart';
+import 'package:stock_app/features/company/data/datasources/company_remote_data_source.dart';
 import 'package:stock_app/features/company/data/datasources/company_local_data_source.dart';
 import 'package:stock_app/features/company/data/repositories/company_repository_impl.dart';
 import 'package:stock_app/features/company/domain/repositories/company_repository.dart';
 import 'package:stock_app/features/company/domain/usecases/get_company.dart';
+import 'package:stock_app/features/company/domain/usecases/get_company_trend.dart';
 import 'package:stock_app/features/company/presentation/cubit/company_cubit.dart';
 import 'package:stock_app/features/news/data/datasources/news_local_data_source.dart';
 import 'package:stock_app/features/news/data/datasources/news_remote_data_source.dart';
@@ -32,6 +33,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
+  // init Hive
   Hive.init((await getApplicationDocumentsDirectory()).path);
 
   // open box
@@ -47,6 +49,7 @@ Future<void> initDependencies() async {
   );
   serviceLocator.registerSingleton<http.Client>(http.Client());
 
+  // feature dependencies
   _initNews(newsBox);
   _initStock(stockBox);
   _initCompany(companyBox);
@@ -106,8 +109,14 @@ void _initCompany(Box box) {
     )
     // use cases
     ..registerSingleton<GetCompany>(GetCompany(serviceLocator()))
+    ..registerSingleton<GetCompanyTrend>(GetCompanyTrend(serviceLocator()))
     // bloc (cubits)
-    ..registerSingleton<CompanyCubit>(CompanyCubit(serviceLocator()));
+    ..registerSingleton<CompanyCubit>(
+      CompanyCubit(
+        getCompanyUseCase: serviceLocator(),
+        getCompanyTrendUseCase: serviceLocator(),
+      ),
+    );
 }
 
 void _initProfile(Box box) {
