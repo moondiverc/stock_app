@@ -13,16 +13,6 @@ Stock App adalah aplikasi mobile yang menampilkan informasi mengenai tren saham,
 
 ### Packages
 
-- flutter_bloc
-- fpdart
-- get_it
-- internet_connection_checker_plus
-- http
-- url_launcher
-- hive
-- path_provider
-- yahoo_finance_data_reader
-
 ## Lesson Learned
 
 ## Referensi
