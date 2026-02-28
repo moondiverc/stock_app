@@ -34,7 +34,9 @@ class CompanyRepositoryImpl implements CompanyRepository {
 
       try {
         await companyLocalDataSource.cacheCompany(remoteCompany);
-      } on CacheException {}
+      } on CacheException {
+        // Cache Exception
+      }
 
       return right(remoteCompany);
     } on ServerException {

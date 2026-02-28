@@ -66,10 +66,13 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
       final response = await const YahooFinanceDailyReader().getDailyDTOs(
         symbol,
       );
-      final candles = response.candlesData;
 
-      return candles.reversed
-          .take(8)
+      if (response.candlesData.isEmpty) {
+        return [];
+      }
+
+      return response.candlesData.reversed
+          .take(10)
           .map((e) => e.close)
           .toList()
           .reversed
