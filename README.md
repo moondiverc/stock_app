@@ -16,9 +16,3 @@ Stock App adalah aplikasi mobile yang menampilkan informasi mengenai tren saham,
 ## Lesson Learned
 
 ## Referensi
-
-- https://pub.dev/
-- https://github.com/ivofernandes/yahoo_finance_demo
-- https://www.youtube.com/watch?v=ELFORM9fmss
-- https://www.youtube.com/watch?v=nNXE1Sd99t0&list=PLCaS22Sjc8YTzcwGENMFDVc4XDRA2p3Ho&index=4
-- https://www.alphavantage.co/documentation/
