@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class AppTheme {
   // light theme mode
   static final lightThemeMode = ThemeData.light().copyWith(
     scaffoldBackgroundColor: AppPallete.backgroundColor,
+    textTheme: GoogleFonts.interTextTheme(),
     primaryColor: AppPallete.themeColor,
     colorScheme: ColorScheme.light(
       primary: AppPallete.themeColor,

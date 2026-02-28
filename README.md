@@ -1,6 +1,6 @@
 # Stock App
 
-A new Flutter project.
+Stock App adalah aplikasi mobile yang menampilkan informasi mengenai tren saham, berita relevan terkait pasar, informasi mengenai perusahaan saham, dan profile pengguna. Aplikasi ini mengimplementasikan pemanggilan API dari AlphaVantage API dan Yahoo Finance untuk mendapatkan data yang diperlukan. Aplikasi ini dibangun menggunakan Flutter dengan state management menggunakan flutter_bloc. Aplikasi ini juga mengimplementasikan clean architecture dengan memisahkan kode ke dalam layer presentation, domain, dan data. Selain itu, aplikasi ini juga mengimplementasikan caching data menggunakan Hive untuk menyimpan data secara lokal sehingga dapat diakses tanpa koneksi internet.
 
 ## Fitur & Teknologi
 
@@ -24,3 +24,11 @@ A new Flutter project.
 - yahoo_finance_data_reader
 
 ## Lesson Learned
+
+## Referensi
+
+- https://pub.dev/
+- https://github.com/ivofernandes/yahoo_finance_demo
+- https://www.youtube.com/watch?v=ELFORM9fmss
+- https://www.youtube.com/watch?v=nNXE1Sd99t0&list=PLCaS22Sjc8YTzcwGENMFDVc4XDRA2p3Ho&index=4
+- https://www.alphavantage.co/documentation/
