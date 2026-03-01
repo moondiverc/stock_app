@@ -13,16 +13,16 @@ Stock App adalah aplikasi mobile yang menampilkan informasi mengenai tren saham,
 
 ### Packages
 
-- flutter_bloc
-- fpdart
-- get_it
-- internet_connection_checker_plus
-- http
-- url_launcher
-- hive
-- path_provider
-- yahoo_finance_data_reader
-- google_fonts
+- flutter_bloc : state management
+- fpdart : error handling with functional programming approach
+- get_it : dependency injection
+- internet_connection_checker_plus : checking user internet connection
+- http : API call
+- url_launcher : launching url to external web
+- hive : local data source
+- path_provider : getting path to store local data source
+- yahoo_finance_data_reader : get stock data and history price from Yahoo Finance
+- google_fonts : custom font
 
 ## Lesson Learned
 
