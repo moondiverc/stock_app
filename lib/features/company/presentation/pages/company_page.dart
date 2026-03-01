@@ -25,6 +25,12 @@ class CompanyPage extends StatefulWidget {
 }
 
 class _CompanyPageState extends State<CompanyPage> {
+  String normalizeValue(String? value) {
+    final raw = value?.trim() ?? '';
+    if (raw.isEmpty || raw == 'None' || raw == '-') return '-';
+    return raw;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +40,7 @@ class _CompanyPageState extends State<CompanyPage> {
   @override
   Widget build(BuildContext context) {
     String formatMarketCap(String value) {
-      if (value == 'None' || value == '0' || value == '-') return 'N/A';
+      if (value == 'None' || value == '0' || value == '-') return '-';
       try {
         double cap = double.parse(value);
         if (cap >= 1000000000000) {
@@ -48,7 +54,7 @@ class _CompanyPageState extends State<CompanyPage> {
         }
         return value;
       } catch (_) {
-        return 'N/A';
+        return '-';
       }
     }
 
@@ -120,7 +126,7 @@ class _CompanyPageState extends State<CompanyPage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        company.description,
+                        normalizeValue(company.description),
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black54,
@@ -129,7 +135,7 @@ class _CompanyPageState extends State<CompanyPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      _buildWebsiteLink(company.website),
+                      _buildWebsiteLink(normalizeValue(company.website)),
                       const SizedBox(height: 40),
                     ],
                   ),
@@ -248,9 +254,9 @@ class _CompanyPageState extends State<CompanyPage> {
       childAspectRatio: 2.1,
       children: [
         _buildTile('Market Cap', formatCap(company.marketCap)),
-        _buildTile('P/E Ratio', company.peRatio),
+        _buildTile('P/E Ratio', normalizeValue(company.peRatio)),
         _buildTile('Div Yield', formatYield(company.dividendYield)),
-        _buildTile('Sector', company.sector),
+        _buildTile('Sector', normalizeValue(company.sector)),
       ],
     );
   }
@@ -284,7 +290,7 @@ class _CompanyPageState extends State<CompanyPage> {
           ),
           const SizedBox(height: 4),
           Text(
-            value,
+            value == 'None' || value.trim().isEmpty ? '-' : value,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w900,
@@ -299,6 +305,17 @@ class _CompanyPageState extends State<CompanyPage> {
   }
 
   Widget _buildWebsiteLink(String url) {
+    if (url == '-') {
+      return const Text(
+        '-',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppPallete.textColor,
+        ),
+      );
+    }
+
     return InkWell(
       onTap: () => UrlLauncherUtil.launchWebsite(context, url),
       child: Row(
