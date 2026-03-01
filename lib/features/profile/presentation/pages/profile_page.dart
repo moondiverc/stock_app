@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_app/core/common/widgets/appbar.dart';
+import 'package:stock_app/core/common/widgets/stock_appbar.dart';
 import 'package:stock_app/core/common/widgets/bottom_navbar.dart';
 import 'package:stock_app/core/common/widgets/loader.dart';
 import 'package:stock_app/core/theme/app_pallete.dart';
