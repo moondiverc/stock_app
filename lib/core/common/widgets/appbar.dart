@@ -34,28 +34,34 @@ class StockAppBar extends StatelessWidget implements PreferredSizeWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: AppPallete.whiteColor,
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: AppPallete.whiteColor,
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        color: AppPallete.whiteColor.withOpacity(0.8),
-                        fontSize: 14.0,
+                      const SizedBox(height: 4.0),
+                      Text(
+                        subtitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: AppPallete.whiteColor.withOpacity(0.8),
+                          fontSize: 14.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                if (action != null) action!,
+                if (action != null) ...[const SizedBox(width: 12.0), action!],
               ],
             ),
           ],

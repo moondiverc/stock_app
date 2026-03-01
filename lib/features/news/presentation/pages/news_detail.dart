@@ -40,9 +40,17 @@ class NewsDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String appBarTitle = news.title.trim().isNotEmpty
+        ? news.title
+        : 'News Details';
+    final String appBarSubtitle =
+        news.authors.isNotEmpty && news.authors.first.trim().isNotEmpty
+        ? news.authors.first
+        : 'Anonymous';
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: StockAppBar(title: 'News', subtitle: 'News Details'),
+      appBar: StockAppBar(title: appBarTitle, subtitle: appBarSubtitle),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +119,7 @@ class NewsDetailPage extends StatelessWidget {
                       letterSpacing: -0.5,
                     ),
                   ),
+
                   const SizedBox(height: 16.0),
 
                   // authors list
