@@ -12,6 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // binding init
   await initDependencies(); // dependencies init
   runApp(
+    // init bloc provider untuk semua features
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => serviceLocator<NewsCubit>()),

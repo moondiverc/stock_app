@@ -13,6 +13,28 @@ Stock App adalah aplikasi mobile yang menampilkan informasi mengenai tren saham,
 
 ### Packages
 
+- flutter_bloc
+- fpdart
+- get_it
+- internet_connection_checker_plus
+- http
+- url_launcher
+- hive
+- path_provider
+- yahoo_finance_data_reader
+- google_fonts
+
 ## Lesson Learned
 
+Selama proses pembuatan Stock App, saya mempelajari alur pengembangan aplikasi yang sistematis dan berkualitas tinggi melalui penerapan best practice yang saya temukan dari beberapa sumber referensi. Saya berusaha agar secara konsisten mengimplementasikan Clean Architecture dan SOLID principles untuk menjaga scalability kode, serta menggunakan state management flutter_bloc. Tahapan pengembangan yang saya lakukan dimulai dari penyusunan struktur folder yang modular dan penentuan theme dan core, kemudian saya melakukan integrasi API untuk menjamin ketersediaan data, dan mulai mengembangkan detail UI pada setiap fitur. Setiap harinya, saya melakukan analisis terhadap kode yang telah dibuat untuk mencari celah optimasi agar struktur aplikasi tetap clean. Alur pengembangan setiap fitur saya lakukan secara konsisten adalah saya memulai dari membangun domain layer (entity & repository interface), menyusun data layer (model & data source implementation), kemudian menghubungkannya ke presentation layer melalui use case dan dependency injection menggunakan get_it. Setelah semua fitur sudah terimplementasi dengan baik, aku mengimplementasikan local data source menggunakan hive, path_provider, dan internet_connection_checker_plus untuk mengecek koneksi internet user dan mengambil data dari local apabila tidak ada koneksi internet.
+
+Banyak teknologi baru yang saya eksplorasi dalam proyek ini untuk mendukung fungsionalitas dan pengalaman user pada setiap halamannya. Saya menggunakan package http untuk pemanggilan API, hive dan path_provider untuk caching data secara efisien ke dalam local data source. Hal ini memungkinkan aplikasi tetap responsif dan dapat diakses meskipun dalam kondisi koneksi internet yang terbatas dan koneksi internet user dapat dicek melalui internet_connection_checker_plus. Untuk mengelola dependency secara modular, saya mengimplementasikan service locator melalui get_it. Selain itu, saya juga mengintegrasikan berbagai library pendukung yang esensial, seperti yahoo_finance_data_reader untuk mendapatkan data stock dan history price dari Yahoo Finance, url_launcher untuk memberikan akses langsung ke situs web eksternal perusahaan, serta penggunaan google_fonts untuk menambahkan custom font pada aplikasi.
+
 ## Referensi
+
+- https://pub.dev/
+- https://github.com/ivofernandes/yahoo_finance_demo
+- https://www.youtube.com/watch?v=ELFORM9fmss
+- https://www.youtube.com/playlist?list=PLCaS22Sjc8YTzcwGENMFDVc4XDRA2p3Ho
+- https://www.youtube.com/playlist?list=PLXbYsh3rUPSzuLcZsIkpDmftSQbFmUq9x
+- https://www.alphavantage.co/documentation/
